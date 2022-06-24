@@ -40,12 +40,8 @@ a minimal dependency and runtime footprint.
 
 We recommend collecting all configuration related code in a package `internal/repository/configuration`.
 
-You configure the configuration subsystem by a call to `auconfigenv.Setup(...)`. This function takes 3 arguments:
+You configure the configuration subsystem by a call to `auconfigenv.Setup(...)`. This function takes 2 arguments:
  - a list of `auconfigapi.ConfigItem` to specify what configuration items exist 
- - a failure handler of type `auconfigapi.ConfigFailFunc`, which is expected to somehow notify
-   the user or environment that loading configuration has failed. It should terminate the application. 
-   `panic` satisfies these requirements, but we hope you won't use that in an actual production ready
-   enterprise service...
  - a warning message handler of type `auconfigapi.ConfigWarnFunc`, which should probably log a warning
    using your preferred logging framework. `log.Print` satisfies the type requirements, but again we
    hope this is not what you'll use in production...
@@ -54,12 +50,14 @@ See [go-autumn-config-api](https://github.com/StephanHCB/go-autumn-config-api/bl
 the precise type definitions.
 
 When you request your configuration to be loaded, which you must do yourself with a call to 
-`auconfigenv.Load()`, every key is assigned its value by going through the following precedence list:
+`auconfigenv.Read()`, every key is assigned its value by going through the following precedence list:
  - environment variable
  - configuration read from local-config.yaml
  - default value specified in ConfigItems
 
 Once loaded, validate the values by calling `auconfigenv.Validate()` to validate each configuration entry.
+It will use the warning message callback to notify you about individual errors, and if any validation
+errors were found, return an error at the end.
 
 Once loaded (even before validation), access configuration values by calling `auconfigenv.Get(key)`,
 which returns the cached string value. 
@@ -117,7 +115,7 @@ var configItems = []auconfigapi.ConfigItem{
 // initialize the library.
 func Setup() {
     auconfigenv.Setup(configItems, panic, log.Print)
-    auconfigenv.Load()
+    auconfigenv.Read()
     auconfigenv.Validate()
 }
 
