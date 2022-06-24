@@ -1,5 +1,7 @@
 github.com/StephanHCB/go-autumn-config-api v0.2.0 h1:XxJl5zNdqgbuKDn80w3VDlAfnqhie48EZK18UCdVy5g=
 github.com/StephanHCB/go-autumn-config-api v0.2.0/go.mod h1:6nJBwuT1uURHApOSFr6Rw+naK2YkO+sAduwEWZ0qsSU=
+github.com/StephanHCB/go-autumn-config-api v0.2.1 h1:t2EeTsdFpLM2xH2T7QFQtbFYI8hG5I9S+Q2o3KT6mlk=
+github.com/StephanHCB/go-autumn-config-api v0.2.1/go.mod h1:6nJBwuT1uURHApOSFr6Rw+naK2YkO+sAduwEWZ0qsSU=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
