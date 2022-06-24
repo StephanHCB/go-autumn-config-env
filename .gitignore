@@ -1,0 +1,9 @@
+# IDE files
+.idea/**
+**/*.iml
+**/*.ipr
+**/*.iws
+
+# compile and test output
+test/contract/*/log/**
+
