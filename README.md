@@ -86,15 +86,15 @@ import (
 
 // custom validation function example
 func checkValidPortNumber(key string) error {
-	portStr := auconfigenv.Get(key)
-	port, err := strconv.Atoi(portStr)
-	if err != nil {
+    portStr := auconfigenv.Get(key)
+    port, err := strconv.Atoi(portStr)
+    if err != nil {
         return fmt.Errorf("fatal error: configuration value for key %s is not a valid number: %s", key, err.Error())
     }
-	if port < 1024 || port > 65535 {
-		return fmt.Errorf("fatal error: configuration value for key %s is not in range 1024..65535", key)
-	}
-	return nil
+    if port < 1024 || port > 65535 {
+        return fmt.Errorf("fatal error: configuration value for key %s is not in range 1024..65535", key)
+    }
+    return nil
 }
 
 // define what configuration items you want
@@ -114,9 +114,9 @@ var configItems = []auconfigapi.ConfigItem{
 
 // initialize the library.
 func Setup() {
-    auconfigenv.Setup(configItems, panic, log.Print)
-    auconfigenv.Read()
-    auconfigenv.Validate()
+    _ = auconfigenv.Setup(configItems, log.Print)
+	_ = auconfigenv.Read()
+	_ = auconfigenv.Validate()
 }
 
 // provide accessor functions

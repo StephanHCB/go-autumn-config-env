@@ -10,8 +10,6 @@ var warnFunction auconfigapi.ConfigWarnFunc = warn
 
 var configItems []auconfigapi.ConfigItem
 
-var configValues map[string]string
-
 // Setup initializes configuration with the default values - you need to call this from your code before calling
 // Read() and Validate().
 func Setup(items []auconfigapi.ConfigItem, warnFunc auconfigapi.ConfigWarnFunc) error {
