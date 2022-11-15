@@ -67,3 +67,42 @@ func TestObtainIntRangeValidator(t *testing.T) {
 	tstRequireErrorMsg(t, "value hallo 1234 is not a valid integer: ", cut("int4_parse"))
 	require.Nil(t, cut("int5"))
 }
+
+func TestObtainIsBooleanValidator(t *testing.T) {
+	configValues = make(map[string]string, 0)
+	configValues["bool1"] = "true"
+	configValues["bool2"] = "false"
+	configValues["bool3"] = "TRUE"
+	configValues["bool4_fail"] = "hallo"
+
+	cut := ObtainIsBooleanValidator()
+
+	require.Nil(t, cut("bool1"))
+	require.Nil(t, cut("bool2"))
+	require.Nil(t, cut("bool3"))
+	tstRequireErrorMsg(t, "value hallo is not a valid boolean value", cut("bool4_fail"))
+}
+
+func TestObtainIsRegexValidator(t *testing.T) {
+	configValues = make(map[string]string, 0)
+	configValues["regexp1"] = "^hello$"
+	configValues["regexp2_fail"] = "^(hello$"
+
+	cut := ObtainIsRegexValidator()
+
+	require.Nil(t, cut("regexp1"))
+	tstRequireErrorMsg(t, "value ^(hello$ is not a valid regex pattern", cut("regexp2_fail"))
+}
+
+func TestObtainSingleCharacterValidator(t *testing.T) {
+	configValues = make(map[string]string, 0)
+	configValues["char1"] = "a"
+	configValues["char2_fail"] = ""
+	configValues["char3_fail"] = "aa"
+
+	cut := ObtainSingleCharacterValidator()
+
+	require.Nil(t, cut("char1"))
+	tstRequireErrorMsg(t, "cannot be empty", cut("char2_fail"))
+	tstRequireErrorMsg(t, "cannot consist of multiple characters", cut("char3_fail"))
+}

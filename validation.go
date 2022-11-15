@@ -86,6 +86,38 @@ func ObtainIntRangeValidator(min int, max int) auconfigapi.ConfigValidationFunc 
 	}
 }
 
+func ObtainIsBooleanValidator() auconfigapi.ConfigValidationFunc {
+	return func(key string) error {
+		value := Get(key)
+		if _, err := strconv.ParseBool(value); err != nil {
+			return fmt.Errorf("value %s is not a valid boolean value", value)
+		}
+		return nil
+	}
+}
+
+func ObtainIsRegexValidator() auconfigapi.ConfigValidationFunc {
+	return func(key string) error {
+		value := Get(key)
+		if _, err := regexp.Compile(value); err != nil {
+			return fmt.Errorf("value %s is not a valid regex pattern", value)
+		}
+		return nil
+	}
+}
+
+func ObtainSingleCharacterValidator() auconfigapi.ConfigValidationFunc {
+	return func(key string) error {
+		value := Get(key)
+		if len(value) < 1 {
+			return fmt.Errorf("cannot be empty")
+		} else if len(value) > 1 {
+			return fmt.Errorf("cannot consist of multiple characters")
+		}
+		return nil
+	}
+}
+
 // --- conversion helpers ---
 
 func AToUint(s string) (uint, error) {
