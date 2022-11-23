@@ -9,6 +9,10 @@ import (
 )
 
 func Validate() error {
+	for _, k := range unknownConfigKeys {
+		warnFunction(fmt.Sprintf("local configuration file contained setting for unknown configuration key %s", k))
+	}
+
 	var errorList = make([]error, 0)
 	for _, it := range configItems {
 		if it.Validate != nil {

@@ -49,7 +49,7 @@ func ReadYaml(filename string) error {
 	}
 
 	for k, _ := range stringValues {
-		return fmt.Errorf("local configuration file contained setting for unknown configuration key %s, bailing out", k)
+		unknownConfigKeys = append(unknownConfigKeys, k)
 	}
 
 	return nil
