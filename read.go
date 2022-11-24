@@ -40,11 +40,17 @@ func ReadYaml(filename string) error {
 		return fmt.Errorf("error parsing local configuration flat yaml file %s (both keys and values must be strings): %s", filename, err.Error())
 	}
 
+	var configItemsKeys = make(map[string]bool, 0)
 	for _, it := range configItems {
-		fileValue, ok := stringValues[it.Key]
+		configItemsKeys[it.Key] = true
+	}
+
+	for k, v := range stringValues {
+		configValues[k] = v
+
+		_, ok := configItemsKeys[k]
 		if ok {
-			configValues[it.Key] = fileValue
-			delete(stringValues, it.Key)
+			delete(stringValues, k)
 		}
 	}
 
