@@ -1,23 +1,11 @@
 # go-autumn-config-env
 
-## About go-autumn
-
-A collection of libraries for [enterprise microservices](https://github.com/StephanHCB/go-mailer-service/blob/master/README.md) in golang that
-- is heavily inspired by Spring Boot / Spring Cloud
-- is very opinionated
-- names modules by what they do
-- unlike Spring Boot avoids certain types of auto-magical behaviour
-- is not a library monolith, that is every part only depends on the api parts of the other components
-  (if at all), and the api parts do not add any dependencies.
-
-Fall is my favourite season, so I'm calling it _go-autumn_.
-
 ## About go-autumn-config-env
 
 A library that handles configuration for enterprise microservices.
 
 This is a **lightweight alternative** to [go-autumn-config](https://github.com/StephanHCB/go-autumn-config) that
-is tailored specifically towards twelve factor microservices, especially when run in a container in Kubernetes.
+is tailored specifically towards 15 factor microservices, especially when run in a container.
 
 In order of precedence, configuration values come from
 - environment variables
@@ -33,7 +21,7 @@ There is **no support** for application profiles.
 
 There is **no support** for a separate file for secrets.
 
-On the plus side, this guides developers on the right path towards a twelve factor app, and there is
+On the plus side, this guides developers on the right path towards a 15 factor app, and there is
 a minimal dependency and runtime footprint.
 
 ## How to use
@@ -62,12 +50,13 @@ errors were found, return an error at the end.
 Once loaded (even before validation), access configuration values by calling `auconfigenv.Get(key)`,
 which returns the cached string value. 
 
-We have found that a good use pattern is to have a file called `access.go` inside your configuration
-package where you can provide public accessor functions for all your configuration values.
+We also export `auconfigenv.Set(key, value)`, which allows injecting configuration values at runtime, for example
+after querying a secrets management solution such as OpenBAO, or during tests.
 
 ## Structured data under a key
 
-... is not supported.
+... is not directly supported, but you can parse JSON from configuration values, and the validation function
+can check validity and correctness.
 
 ## Examples:
 
